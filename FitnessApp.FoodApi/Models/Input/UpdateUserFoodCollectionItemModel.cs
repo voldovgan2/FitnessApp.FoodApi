@@ -1,9 +1,9 @@
-﻿using FitnessApp.Abstractions.Models.Collection;
-using System;
+﻿using System;
+using FitnessApp.Common.Abstractions.Models.Collection;
 
 namespace FitnessApp.FoodApi.Models.Input
 {
-    public class UpdateFoodItemModel : ICollectionItemModel
+    public class UpdateUserFoodCollectionItemModel : ICollectionItemModel
     {
         public string Id { get; set; }
         public string Name { get; set; }

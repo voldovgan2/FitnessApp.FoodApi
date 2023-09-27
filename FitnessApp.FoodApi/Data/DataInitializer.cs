@@ -1,17 +1,19 @@
-﻿using FitnessApp.FoodApi.Data.Entities;
+﻿using System;
+using System.Threading.Tasks;
+using FitnessApp.FoodApi.Data.Entities;
 using FitnessApp.FoodApi.Models.Input;
 using FitnessApp.FoodApi.Models.Output;
-using FitnessApp.FoodApi.Services.UserFood;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
 
 namespace FitnessApp.FoodApi.Data
 {
-    public class DataInitializer
+    public static class DataInitializer
     {
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public static async Task EnsureFoodsCreatedAsync(IServiceProvider serviceProvider, bool create = false, bool delete = false)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
+            /*
             using (var scope = serviceProvider.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -40,6 +42,7 @@ namespace FitnessApp.FoodApi.Data
                     await service.CreateItemAsync(new CreateUserFoodModel { UserId = adminId });
                 }
             }
+            */
         }
     }
 }
