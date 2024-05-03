@@ -4,8 +4,9 @@ using FitnessApp.FoodApi.Models.Output;
 
 namespace FitnessApp.FoodApi.Data
 {
-    public interface IFoodRepository
-        : ICollectionRepository<UserFoodCollectionModel, UserFoodCollectionItemModel, CreateUserFoodCollectionModel, UpdateUserFoodCollectionModel>
-    {
-    }
+    public interface IFoodRepository : ICollectionRepository<
+        UserFoodCollectionModel,
+        UserFoodCollectionItemModel,
+        CreateUserFoodCollectionModel,
+        UpdateUserFoodCollectionModel>;
 }

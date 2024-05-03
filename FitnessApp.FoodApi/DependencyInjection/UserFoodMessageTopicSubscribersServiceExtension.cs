@@ -1,9 +1,8 @@
 ﻿using System;
 using FitnessApp.Common.Serializer.JsonSerializer;
+using FitnessApp.Common.ServiceBus.Nats.Services;
 using FitnessApp.FoodApi.Services.MessageBus;
 using FitnessApp.FoodApi.Services.UserFoodAggregator;
-using FitnessApp.ServiceBus.AzureServiceBus.TopicSubscribers;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FitnessApp.FoodApi.DependencyInjection
@@ -12,17 +11,16 @@ namespace FitnessApp.FoodApi.DependencyInjection
     {
         public static IServiceCollection AddFoodMessageTopicSubscribersService(this IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            ArgumentNullException.ThrowIfNull(services);
 
-            services.AddTransient<ITopicSubscribers, UserFoodMessageTopicSubscribersService>(
+            services.AddTransient(
                 sp =>
                 {
-                    var configuration = sp.GetRequiredService<IConfiguration>();
-                    var subscription = configuration.GetValue<string>("ServiceBusSubscriptionName");
                     return new UserFoodMessageTopicSubscribersService(
-                        sp.GetRequiredService<IUserFoodCollectionBlobAggregatorService>().CreateUserFoods,
-                        subscription,
-                        sp.GetRequiredService<IJsonSerializer>());
+                        sp.GetRequiredService<IServiceBus>(),
+                        sp.GetRequiredService<IUserFoodCollectionFileAggregatorService>().CreateUserFoods,
+                        sp.GetRequiredService<IJsonSerializer>()
+                    );
                 }
             );
 

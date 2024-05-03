@@ -7,14 +7,12 @@ using FitnessApp.FoodApi.Models.Output;
 
 namespace FitnessApp.FoodApi.Data
 {
-    public class FoodRepository
-        : CollectionRepository<UserFoodCollectionEntity, FoodICollectiontemEntity, UserFoodCollectionModel, UserFoodCollectionItemModel, CreateUserFoodCollectionModel, UpdateUserFoodCollectionModel>,
-        IFoodRepository
-    {
-        public FoodRepository(
-            IDbContext<UserFoodCollectionEntity> context,
-            IMapper mapper)
-            : base(context, mapper)
-        { }
-    }
+    public class FoodRepository(IDbContext<UserFoodCollectionEntity> context, IMapper mapper) : CollectionRepository<
+        UserFoodCollectionEntity,
+        FoodICollectiontemEntity,
+        UserFoodCollectionModel,
+        UserFoodCollectionItemModel,
+        CreateUserFoodCollectionModel,
+        UpdateUserFoodCollectionModel>(context, mapper),
+        IFoodRepository;
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using FitnessApp.Common.Abstractions.Db.Enums.Collection;
-using FitnessApp.Common.Abstractions.Models.BlobImage;
 using FitnessApp.Common.Abstractions.Models.Collection;
+using FitnessApp.Common.Abstractions.Models.FileImage;
 using FitnessApp.Common.Mapping;
 using FitnessApp.FoodApi.Contracts.Input;
 using FitnessApp.FoodApi.Contracts.Output;
@@ -18,7 +18,7 @@ namespace FitnessApp.FoodApi
     {
         public MappingProfile()
         {
-            #region Contract 2 GenericBlobAggregatorModel
+            #region Contract 2 GenericFileAggregatorModel
             CreateMap<GetUserFoodsContract, GetUserFoodsFilteredCollectionItemsModel>()
                 .ForMember(m => m.CollectionName, c => c.MapFrom(c => _defaultCollectionName))
                 .AfterMap((c, m) =>
@@ -30,30 +30,30 @@ namespace FitnessApp.FoodApi
                             || item.Description.Contains(c.Search);
                     });
                 });
-            CreateMap<CreateUserFoodContract, CreateUserFoodCollectionBlobAggregatorModel>()
-                .ForMember(m => m.Collection, c => c.MapFrom(c => new Dictionary<string, IEnumerable<CreateUserFoodCollectionBlobAggregatorModel>>
+            CreateMap<CreateUserFoodContract, CreateUserFoodCollectionFileAggregatorModel>()
+                .ForMember(m => m.Collection, c => c.MapFrom(c => new Dictionary<string, IEnumerable<CreateUserFoodCollectionFileAggregatorModel>>
                 {
-                    { _defaultCollectionName, new List<CreateUserFoodCollectionBlobAggregatorModel>() }
+                    { _defaultCollectionName, new List<CreateUserFoodCollectionFileAggregatorModel>() }
                 }));
-            CreateMap<AddUserFoodContract, UpdateUserFoodCollectionBlobAggregatorModel>()
+            CreateMap<AddUserFoodContract, UpdateUserFoodCollectionFileAggregatorModel>()
                 .ForMember(m => m.Action, c => c.MapFrom(c => UpdateCollectionAction.Add))
                 .ForMember(m => m.CollectionName, c => c.MapFrom(c => _defaultCollectionName))
-                .ForMember(m => m.Model, c => c.MapFrom(c => ConstructUserFoodCollectionBlobAggregatorItemModel(Guid.Empty.ToString(), c.Name, c.Calories, c.Description, c.Photo)));
-            CreateMap<UpdateUserFoodContract, UpdateUserFoodCollectionBlobAggregatorModel>()
+                .ForMember(m => m.Model, c => c.MapFrom(c => ConstructUserFoodCollectionFileAggregatorItemModel(Guid.Empty.ToString(), c.Name, c.Calories, c.Description, c.Photo)));
+            CreateMap<UpdateUserFoodContract, UpdateUserFoodCollectionFileAggregatorModel>()
                 .ForMember(m => m.Action, c => c.MapFrom(c => UpdateCollectionAction.Update))
                 .ForMember(m => m.CollectionName, c => c.MapFrom(c => _defaultCollectionName))
-                .ForMember(m => m.Model, c => c.MapFrom(c => ConstructUserFoodCollectionBlobAggregatorItemModel(c.Id, c.Name, c.Calories, c.Description, c.Photo)));
-            CreateMap<Tuple<string, string>, UpdateUserFoodCollectionBlobAggregatorModel>()
+                .ForMember(m => m.Model, c => c.MapFrom(c => ConstructUserFoodCollectionFileAggregatorItemModel(c.Id, c.Name, c.Calories, c.Description, c.Photo)));
+            CreateMap<Tuple<string, string>, UpdateUserFoodCollectionFileAggregatorModel>()
                 .ForMember(m => m.Action, c => c.MapFrom(c => UpdateCollectionAction.Remove))
                 .ForMember(m => m.CollectionName, c => c.MapFrom(c => _defaultCollectionName))
                 .ForMember(m => m.UserId, c => c.MapFrom(c => c.Item1))
-                .ForMember(m => m.Model, c => c.MapFrom(c => ConstructUserFoodCollectionBlobAggregatorItemModel(c.Item2, default, default, default, default)));
+                .ForMember(m => m.Model, c => c.MapFrom(c => ConstructUserFoodCollectionFileAggregatorItemModel(c.Item2, default, default, default, default)));
             #endregion
 
-            #region CollectionBlobAggregatorModel 2 CollectionModel
+            #region CollectionFileAggregatorModel 2 CollectionModel
 
-            CreateMap<CreateUserFoodCollectionBlobAggregatorModel, CreateUserFoodCollectionModel>();
-            CreateMap<UpdateUserFoodCollectionBlobAggregatorModel, UpdateUserFoodCollectionModel>()
+            CreateMap<CreateUserFoodCollectionFileAggregatorModel, CreateUserFoodCollectionModel>();
+            CreateMap<UpdateUserFoodCollectionFileAggregatorModel, UpdateUserFoodCollectionModel>()
                 .ForMember(m1 => m1.Model, m2 => m2.MapFrom(m2 => m2.Model.Model));
 
             #endregion
@@ -97,8 +97,8 @@ namespace FitnessApp.FoodApi
                 });
             #endregion
 
-            #region CollectionBlobAggregatorModel 2 Contract
-            CreateMap<UserFoodCollectionBlobAggregatorItemModel, FoodItemContract>()
+            #region CollectionFileAggregatorModel 2 Contract
+            CreateMap<UserFoodCollectionFileAggregatorItemModel, FoodItemContract>()
                 .ForMember(c => c.Id, m => m.MapFrom(m => m.Model.Id))
                 .AfterMap((m, c) =>
                 {
@@ -119,28 +119,26 @@ namespace FitnessApp.FoodApi
             return DateTime.UtcNow;
         }
 
-        private UserFoodCollectionBlobAggregatorItemModel ConstructUserFoodCollectionBlobAggregatorItemModel(string id, string name, double calories, string description, string photo)
+        private UserFoodCollectionFileAggregatorItemModel ConstructUserFoodCollectionFileAggregatorItemModel(string id, string name, double calories, string description, string photo)
         {
-            return new UserFoodCollectionBlobAggregatorItemModel
+            return new UserFoodCollectionFileAggregatorItemModel
             {
                 Model = new UserFoodCollectionItemModel
                 {
-                    Id = id == Guid.Empty.ToString()
-                        ? Guid.NewGuid().ToString()
-                        : id,
+                    Id = id,
                     Name = name,
                     AddedDate = GetDateTimeForMapping(),
                     Calories = calories,
                     Description = description
                 },
-                Images = new List<BlobImageModel>
-                {
-                    new BlobImageModel
+                Images =
+                [
+                    new FileImageModel
                     {
                         FieldName = "Photo",
                         Value = photo
-                    }
-                }
+                    },
+                ]
             };
         }
     }

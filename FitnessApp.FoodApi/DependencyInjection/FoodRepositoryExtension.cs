@@ -9,10 +9,11 @@ namespace FitnessApp.FoodApi.DependencyInjection
 {
     public static class FoodRepositoryExtension
     {
-        public static IServiceCollection AddFoodRepository(this IServiceCollection services)
+        public static IServiceCollection ConfigureFoodRepository(this IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            ArgumentNullException.ThrowIfNull(services);
 
+            services.AddTransient<IDbContext<UserFoodCollectionEntity>, DbContext<UserFoodCollectionEntity>>();
             services.AddTransient<IFoodRepository, FoodRepository>(
                 sp =>
                 {
