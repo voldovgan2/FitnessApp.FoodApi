@@ -1,5 +1,4 @@
 ﻿using System;
-using FitnessApp.Common.Serializer.JsonSerializer;
 using FitnessApp.Common.ServiceBus.Nats.Services;
 using FitnessApp.FoodApi.Services.MessageBus;
 using FitnessApp.FoodApi.Services.UserFoodAggregator;
@@ -18,9 +17,7 @@ namespace FitnessApp.FoodApi.DependencyInjection
                 {
                     return new UserFoodMessageTopicSubscribersService(
                         sp.GetRequiredService<IServiceBus>(),
-                        sp.GetRequiredService<IUserFoodCollectionFileAggregatorService>().CreateUserFoods,
-                        sp.GetRequiredService<IJsonSerializer>()
-                    );
+                        sp.GetRequiredService<IUserFoodCollectionFileAggregatorService>().CreateUserFoods);
                 }
             );
 
