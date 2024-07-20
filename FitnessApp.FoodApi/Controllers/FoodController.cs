@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using FitnessApp.Common.Abstractions.Controllers;
 using FitnessApp.Common.Paged.Contracts.Output;
 using FitnessApp.FoodApi.Contracts.Input;
 using FitnessApp.FoodApi.Contracts.Output;
 using FitnessApp.FoodApi.Models.Input;
 using FitnessApp.FoodApi.Services.UserFoodAggregator;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.FoodApi.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-[Produces("application/json")]
-
-[Authorize]
-public class FoodController(IUserFoodCollectionFileAggregatorService foodService, IMapper mapper) : Controller
+public class FoodController(IUserFoodCollectionFileAggregatorService foodService, IMapper mapper) : FitnessAppBaseController
 {
     [HttpGet("GetFood")]
     public async Task<UserFoodsContract> GetFoodAsync([FromQuery] GetUserFoodsContract contract)
