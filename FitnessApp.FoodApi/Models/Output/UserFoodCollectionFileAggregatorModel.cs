@@ -2,11 +2,10 @@
 using FitnessApp.Common.Abstractions.Models.Collection;
 using FitnessApp.Common.Abstractions.Models.CollectionFileAggregator;
 
-namespace FitnessApp.FoodApi.Models.Output
+namespace FitnessApp.FoodApi.Models.Output;
+
+public class UserFoodCollectionFileAggregatorModel : ICollectionFileAggregatorModel
 {
-    public class UserFoodCollectionFileAggregatorModel : ICollectionFileAggregatorModel
-    {
-        public string UserId { get; set; }
-        public Dictionary<string, List<ICollectionFileAggregatorItemModel<ICollectionItemModel>>> Collection { get; set; }
-    }
+    public string UserId { get; set; }
+    public Dictionary<string, List<ICollectionFileAggregatorItemModel<ICollectionItemModel>>> Collection { get; set; }
 }

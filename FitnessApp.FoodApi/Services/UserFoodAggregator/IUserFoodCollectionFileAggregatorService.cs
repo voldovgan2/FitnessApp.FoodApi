@@ -4,13 +4,12 @@ using FitnessApp.Common.Paged.Models.Output;
 using FitnessApp.FoodApi.Models.Input;
 using FitnessApp.FoodApi.Models.Output;
 
-namespace FitnessApp.FoodApi.Services.UserFoodAggregator
+namespace FitnessApp.FoodApi.Services.UserFoodAggregator;
+
+public interface IUserFoodCollectionFileAggregatorService
 {
-    public interface IUserFoodCollectionFileAggregatorService
-    {
-        Task<PagedDataModel<UserFoodCollectionFileAggregatorItemModel>> GetFilteredUserFoods(GetFilteredCollectionItemsModel<UserFoodCollectionItemModel> model);
-        Task<string> CreateUserFoods(CreateUserFoodCollectionFileAggregatorModel model);
-        Task<UserFoodCollectionFileAggregatorItemModel> UpdateUserFoods(UpdateUserFoodCollectionFileAggregatorModel model);
-        Task<string> DeleteUserFoods(string userId);
-    }
+    Task<PagedDataModel<UserFoodCollectionFileAggregatorItemModel>> GetFilteredUserFoods(GetFilteredCollectionItemsModel<UserFoodCollectionItemModel> model);
+    Task<string> CreateUserFoods(CreateUserFoodCollectionFileAggregatorModel model);
+    Task<UserFoodCollectionFileAggregatorItemModel> UpdateUserFoods(UpdateUserFoodCollectionFileAggregatorModel model);
+    Task<string> DeleteUserFoods(string userId);
 }

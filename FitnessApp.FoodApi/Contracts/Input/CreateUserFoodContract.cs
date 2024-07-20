@@ -1,7 +1,6 @@
-﻿namespace FitnessApp.FoodApi.Contracts.Input
+﻿namespace FitnessApp.FoodApi.Contracts.Input;
+
+public class CreateUserFoodContract
 {
-    public class CreateUserFoodContract
-    {
-        public string UserId { get; set; }
-    }
+    public string UserId { get; set; }
 }

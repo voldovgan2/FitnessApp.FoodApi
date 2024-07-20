@@ -5,19 +5,18 @@ using FitnessApp.FoodApi.Services.UserFoodCollection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FitnessApp.FoodApi.DependencyInjection
+namespace FitnessApp.FoodApi.DependencyInjection;
+
+public static class CollectionServiceExtension
 {
-    public static class CollectionServiceExtension
+    public static IServiceCollection ConfigureCollectionServices(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection ConfigureCollectionServices(this IServiceCollection services, IConfiguration configuration)
-        {
-            ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(services);
 
-            services.Configure<CollectionFileAggregatorSettings>(configuration.GetSection("CollectionFileAggregatorSettings"));
-            services.AddTransient<IUserFoodCollectionService, UserFoodCollectionService>();
-            services.AddTransient<IUserFoodCollectionFileAggregatorService, UserFoodCollectionFileAggregatorService>();
+        services.Configure<CollectionFileAggregatorSettings>(configuration.GetSection("CollectionFileAggregatorSettings"));
+        services.AddTransient<IUserFoodCollectionService, UserFoodCollectionService>();
+        services.AddTransient<IUserFoodCollectionFileAggregatorService, UserFoodCollectionFileAggregatorService>();
 
-            return services;
-        }
+        return services;
     }
 }

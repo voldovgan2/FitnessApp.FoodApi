@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using FitnessApp.Common.Configuration;
-using FitnessApp.Common.Serializer.JsonSerializer;
 using FitnessApp.FoodApi;
 using FitnessApp.FoodApi.Contracts.Output;
 using FitnessApp.FoodApi.DependencyInjection;
@@ -16,7 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureMapper(new MappingProfile<FoodItemContract, UserFoodCollectionFileAggregatorItemModel>());
-builder.Services.AddTransient<IJsonSerializer, JsonSerializer>();
 builder.Services.ConfigureMongo(builder.Configuration);
 builder.Services.ConfigureVault(builder.Configuration);
 builder.Services.ConfigureFoodRepository();
