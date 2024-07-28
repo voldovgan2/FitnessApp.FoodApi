@@ -2,7 +2,7 @@
 
 namespace FitnessApp.FoodApi.Contracts.Input;
 
-public class GetUserFoodsContract : GetPagedDataContract
+public class GetUserFoodsContract : GetPagedSearchDataContract
 {
     public string UserId { get; set; }
 }

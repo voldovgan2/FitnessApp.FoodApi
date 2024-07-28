@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using FitnessApp.Common.Abstractions.Models.Collection;
 using FitnessApp.Common.Abstractions.Services.CollectionFileAggregator;
 using FitnessApp.Common.Abstractions.Services.Configuration;
 using FitnessApp.Common.Files;
@@ -32,7 +31,7 @@ public class UserFoodCollectionFileAggregatorService(
         filesAggregatorSettings.Value),
     IUserFoodCollectionFileAggregatorService
 {
-    public Task<PagedDataModel<UserFoodCollectionFileAggregatorItemModel>> GetFilteredUserFoods(GetFilteredCollectionItemsModel<UserFoodCollectionItemModel> model)
+    public Task<PagedDataModel<UserFoodCollectionFileAggregatorItemModel>> GetFilteredUserFoods(GetUserFoodsFilteredCollectionItemsModel model)
     {
         return GetFilteredCollectionItems(model);
     }
