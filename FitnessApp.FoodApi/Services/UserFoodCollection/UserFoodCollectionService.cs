@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FitnessApp.Common.Abstractions.Services.Collection;
+﻿using FitnessApp.Common.Abstractions.Services.Collection;
 using FitnessApp.FoodApi.Data;
 using FitnessApp.FoodApi.Models.Input;
 using FitnessApp.FoodApi.Models.Output;
@@ -8,16 +6,9 @@ using FitnessApp.FoodApi.Models.Output;
 namespace FitnessApp.FoodApi.Services.UserFoodCollection;
 
 public class UserFoodCollectionService(IFoodRepository repository) :
-    CollectionService<
+    CollectionServiceWithNameAndDescription<
         UserFoodCollectionModel,
         UserFoodCollectionItemModel,
         CreateUserFoodCollectionModel,
         UpdateUserFoodCollectionModel>(repository),
-    IUserFoodCollectionService
-{
-    protected override IEnumerable<UserFoodCollectionItemModel> FilterItems(IEnumerable<UserFoodCollectionItemModel> items, string search)
-    {
-        return items.Where(i => i.Name.Contains(search)
-            || i.Description.Contains(search));
-    }
-}
+    IUserFoodCollectionService;

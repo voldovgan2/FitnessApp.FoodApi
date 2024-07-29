@@ -3,7 +3,7 @@ using FitnessApp.Common.Abstractions.Models.Collection;
 
 namespace FitnessApp.FoodApi.Models.Output;
 
-public class UserFoodCollectionItemModel : ICollectionItemModel
+public class UserFoodCollectionItemModel : ICollectionItemWithNameAndDescriptionModel
 {
     public string Id { get; set; }
     public string Name { get; set; }
